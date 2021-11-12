@@ -37,7 +37,14 @@ let partidas = [];
 let pila = [];
 
 app.post('/iniciarJoc/codiPartida', (req, res) => { //POST per començar la partida amb un ID
-    let partida = { 'id': req.body.idPartida, 'cartas': cartas, "pila": pila, turno : 1 ,NumJugadores : 0 };
+
+
+    let partida_pre = comp.comprobar_partida(req.body.idPartida,partidas);
+    if (partida_pre != undefined) {
+        return res.send("La partida ja existeix. Uneix-t'hi");
+    }
+
+    let partida = { 'id': req.body.idPartida, 'cartas': Array.from(cartas) , "pila": pila, turno : 1 ,NumJugadores : 0 };
     partidas.push(partida);
     res.send(partida);
     console.log(partidas);
@@ -152,15 +159,22 @@ app.put('/tirarCarta', (req, res) => { //GET per obtenir una carta aleatòria de
 });
 
 
-
-app.get('/comprobarPila/:codiPartida', (req, res) => { //
+app.get('/comprobarPila/:idPartida', (req, res) => { //
     let partida = partidas.find(a => a.id === req.params.idPartida);
     let pila = partida.pila;
     res.send(pila);
 
 });
 
-
-
+app.delete('/acabarJoc/:idPartida', (req, res) => { //
+    let partida = comp.comprobar_partida(req.params.idPartida,partidas);
+    if (partida == undefined) {
+        return res.send("Partida no existeix");
+    }
+    let index = partidas.indexOf(partida)
+    partidas.splice(index, 1);
+    res.send("Partida eliminada");
+    
+});
 
 app.listen(3000, () => console.log('inici servidor'));
