@@ -1,6 +1,7 @@
 
 module.exports = {
     comprobar_partida: function (idPartida,partidas) {
+        if(idPartida == "")return undefined;
         let partida = partidas.find(a => a.id == idPartida);
         return partida;
     },

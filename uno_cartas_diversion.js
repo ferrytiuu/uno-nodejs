@@ -1,6 +1,6 @@
 /**
  * Aplicació en ExpressJS que crea una API REST completa
- * @author 
+ * @author
  * @version 0.1
  */
 
@@ -8,11 +8,14 @@
 const express = require('express');
 const { comprobar_jugador } = require('./funcions_comprovacions');
 var comp = require('./funcions_comprovacions');
+const path = require("path");
 const app = express();
 
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()) // per analitzar les peticions HTTP que portin JSON al body
+app.use(express.static(path.join(__dirname, 'public'))); //  "public" off of current is root
+
 
 //Cartes originals
 /*
@@ -38,6 +41,9 @@ let pila = [];
 
 app.post('/iniciarJoc/codiPartida', (req, res) => { //POST per començar la partida amb un ID
 
+
+
+    if(req.body.idPartida == "")return res.send("Id de partida no pot ser null");;
 
     let partida_pre = comp.comprobar_partida(req.body.idPartida,partidas);
     if (partida_pre != undefined) {
