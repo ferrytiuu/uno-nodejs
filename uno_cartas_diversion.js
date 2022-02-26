@@ -160,9 +160,28 @@ app.put('/tirarCarta', (req, res) => { //GET per obtenir una carta aleatòria de
 
 
 app.get('/comprobarPila/:idPartida', (req, res) => { //
-    let partida = partidas.find(a => a.id === req.params.idPartida);
+    console.log(req.params);
+    let partida = comp.comprobar_partida(req.params.idPartida,partidas);
+    if (partida == undefined) {
+        return res.send("Partida no existeix");
+    }
     let pila = partida.pila;
     res.send(pila);
+
+});
+
+app.get('/comprobarCartas/:Usuari/:idPartida', (req, res) => { //
+
+    let partida = comp.comprobar_partida(req.params.idPartida,partidas);
+    if (partida == undefined) {
+        return res.send("Partida no existeix");
+    }
+    let jugador = comp.comprobar_jugador(req.params.idPartida, req.params.Usuari,jugadors);
+    if ( jugador == undefined) {
+        return res.send("Usuario o codi de partida incorrecte");
+    }
+    res.send(jugador.cartasJugador);
+
 
 });
 

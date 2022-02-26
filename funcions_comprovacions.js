@@ -1,7 +1,7 @@
 
 module.exports = {
     comprobar_partida: function (idPartida,partidas) {
-        let partida = partidas.find(a => a.id === idPartida);
+        let partida = partidas.find(a => a.id == idPartida);
         return partida;
     },
     comprobar_jugador: function (idPartida,nombre,jugadors) {
