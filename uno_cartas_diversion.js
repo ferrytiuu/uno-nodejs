@@ -37,7 +37,7 @@ for (let index = 0; index <= 9; index++) {
 
 let jugadors = [];
 let partidas = [];
-let pila = [];
+//let pila = [];
 
 app.post('/iniciarJoc/codiPartida', (req, res) => { //POST per començar la partida amb un ID
 
@@ -50,7 +50,7 @@ app.post('/iniciarJoc/codiPartida', (req, res) => { //POST per començar la part
         return res.send("La partida ja existeix. Uneix-t'hi");
     }
 
-    let partida = { 'id': req.body.idPartida, 'cartas': Array.from(cartas) , "pila": pila, turno : 1 ,NumJugadores : 0 };
+    let partida = { 'id': req.body.idPartida, 'cartas': Array.from(cartas) , "pila": pila=[], turno : 1 ,NumJugadores : 0 };
     partidas.push(partida);
     res.send(partida);
     console.log(partidas);

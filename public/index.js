@@ -21,7 +21,7 @@ function main() {
         fetch("/iniciarJoc/codiPartida", requestOptions)
             .then(response => response.text())
             .then(result => {
-                let resultado = JSON.stringify(result, null, "\t"); // Indented with tab
+                let resultado = JSON.parse(result); // Indented with tab
                 console.log(resultado);
             })
             .catch(error => console.log('error', error));
